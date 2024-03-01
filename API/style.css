@@ -1,0 +1,22 @@
+.contenedor {
+   
+    text-align: center;
+        
+}
+button{
+    margin-top: 10px;
+}
+
+#contenido {
+    margin-top: 20px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.label {
+    margin-right: 5px; 
+    font-weight: bold; 
+}

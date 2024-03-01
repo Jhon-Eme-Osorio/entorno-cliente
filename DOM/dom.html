@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manipulación del DOM</title>
+</head>
+<body>
+
+<!-- Elementos existentes en el DOM -->
+<h1 id="titulo">Manipulación del DOM</h1>
+<div id="contenedor">
+    <p id="parrafo">Este es un párrafo.</p>
+    <ul id="lista">
+        <li>Elemento 1</li>
+        <li>Elemento 2</li>
+        <li>Elemento 3</li>
+    </ul>
+</div>
+
+<!-- Botones para manipulación del DOM -->
+<button id="buscarElementoBtn">Buscar Elemento</button>
+<button id="padreBtn">Acceder al Padre</button>
+<button id="hijoBtn">Acceder al Hijo</button>
+<button id="crearElementoBtn">Crear Elemento</button>
+<input type="checkbox" id="posicion">Agregar al principio
+<button id="borrarBtn">Borrar Último Elemento</button>
+
+<!-- Resultado de la manipulación del DOM -->
+<div id="resultado"></div>
+<br>
+
+<a href="../JQUERY/index.html">Volver al Menu</a>
+
+<script>
+    // Event listeners para los botones
+    document.getElementById("buscarElementoBtn").addEventListener("click", buscarElemento);
+    document.getElementById("padreBtn").addEventListener("click", accederAPadre);
+    document.getElementById("hijoBtn").addEventListener("click", accederAHijo);
+    document.getElementById("crearElementoBtn").addEventListener("click", crearElemento);
+    document.getElementById("borrarBtn").addEventListener("click", borrarElemento);
+
+    
+    // Funcion para buscar un elemento en el DOM y mostrar su contenido
+    function buscarElemento() {
+        let parrafo = document.getElementById('parrafo');
+        document.getElementById('resultado').innerHTML = `<br>El elemento encontrado es: "${parrafo.innerHTML}"`;
+    }
+    
+    // Funcion para acceder al padre de un elemento y mostrar su etiqueta
+    function accederAPadre() {
+        let lista = document.getElementById('lista');
+        let padreLista = lista.parentElement;
+        document.getElementById('resultado').innerHTML = `<br>El padre de la lista es: "${padreLista.tagName}"`;
+    }
+
+    // Funcion para acceder al primer y ultimo hijo de un elemento y mostrar su contenido
+    function accederAHijo() {
+        let lista = document.getElementById('lista');
+        let primerElementoLista = lista.firstElementChild;
+        let ultimoElementoLista = lista.lastElementChild;
+        document.getElementById('resultado').innerHTML = `<br>El primer hijo de la lista es: "${primerElementoLista.innerHTML}"
+                                                         <br>El último hijo de la lista es: "${ultimoElementoLista.innerHTML}"`;
+    }
+
+     // Funcion para crear un nuevo elemento y agregarlo al principio o al final de la lista segun la opcion seleccionada
+    function crearElemento() {
+        let lista = document.getElementById('lista');
+        let nuevoElemento = document.createElement('li');
+        nuevoElemento.innerHTML = 'Elemento Nuevo';
+        let posicionElemento = document.getElementById("posicion");
+        let alFinal = !posicionElemento.checked;
+        if(alFinal){
+            lista.appendChild(nuevoElemento);
+        }else{
+            lista.insertBefore(nuevoElemento, lista.firstChild);
+        }
+
+        let lugar = alFinal ? "final" : "principio";       
+        document.getElementById('resultado').innerHTML = `<br>Se ha creado un nuevo elemento al "${lugar}"`;
+    }
+
+    // Funcion para borrar el ultimo elemento de la lista
+    function borrarElemento() {
+        let lista = document.getElementById('lista');
+        let ultimoElementoLista = lista.lastElementChild;
+        if (ultimoElementoLista) {
+            lista.removeChild(ultimoElementoLista);
+            document.getElementById('resultado').innerHTML = '<br>Se ha borrado el último elemento.';
+        } else {
+            document.getElementById('resultado').innerHTML = '<br>No hay elementos para borrar.';
+        }
+    }
+</script>
+
+</body>
+</html>

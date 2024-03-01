@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Api</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="contenedor">
+      <h1>Consumición de API</h1>
+      <p>
+        Introducción<br>API generador de usuarios aleatorios<br> En agosto de
+        2013, nos propusimos crear un servicio gratuito y fácil de usar para
+        generar datos de usuario aleatorios para probar aplicaciones.<br>
+        <a href="https://randomuser.me/" target="_blank">acceder a la documentacion de la API</a>
+      </p>
+
+      <button id="mostrar">Generar Usuario</button><br />
+      <div id="contenido"></div><br><br>
+      <a href="../JQUERY/index.html">Volver al Menu</a>
+    </div>
+
+    <script>
+        //obtengo el id del boton y agrego el evento click
+      document
+        .getElementById("mostrar")
+        .addEventListener("click", consumirApi, true);
+      let contenido = document.querySelector("#contenido");
+      function consumirApi() {
+        //url con informacion de la API
+        fetch("https://randomuser.me/api/")
+        //Nos permite obtener los resultados
+          .then((res) => res.json())
+          //aqui los muestro por consola
+          .then((data) => {
+            console.log(data.results[0]);
+            //aqui muestro el contenido en la pagina con informacion del objeto, nombre,apellido,edad, etc.
+            contenido.innerHTML = `
+                <img src="${data.results[0].picture.large}" width="200px"/>
+                <div class="container">
+                <div class="label">Nombre:
+                    <br>Apellido:
+                    <br>Edad:
+                    <br>Pais:
+                    <br>Ciudad:</div>
+                <div class="result">${data.results[0].name.first}
+                   <br> ${data.results[0].name.last}
+                   <br> ${data.results[0].dob.age}
+                   <br> ${data.results[0].location.country}
+                   <br> ${data.results[0].location.city}</div>
+                </div>
+                `;
+          });
+      }
+    </script>
+  </body>
+</html>
